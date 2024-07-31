@@ -7,7 +7,7 @@ The code relies on the following Python libraries:
 - `numpy` 
 - `scipy`
 - `cmath`
-- `yime`
+- `time`
 - `pandas` 
 - `matplotlib` 
 - `locale`

@@ -10,5 +10,6 @@ The code relies on the following Python libraries:
 
 ```bash
 pip install numpy scipy pandas matplotlib
+```
 
 Make sure you have the experimental_data.xlsx file in the same directory as the script.

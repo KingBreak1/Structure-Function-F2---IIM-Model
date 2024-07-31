@@ -11,7 +11,7 @@ import locale
 
 Q2 = 22  # virtuality
 
- # constants took from https://arxiv.org/pdf/1307.0825.pdf (and references)
+ # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 
 alpha_elm = 1.0/137.0  # Fine-structure constant
 Nc = 3.0  # number of colors
@@ -77,11 +77,11 @@ def main():
     df = pd.read_excel('experimental_data.xlsx', header=None,index_col=False, names=['Q2', 'x', 'sigma', 'erro']) # reads the excel document labeled "experimental_data.xlsx" that contains all the experimental information for x < 10^-2
 
 
-    XA = df.loc[df['Q2'] == Q2, 'x'].to_list()  # puts in list the experimental values of x that correspond to the selected virtuality
-    SA = df.loc[df['Q2'] == Q2, 'sigma'].to_list()  # puts in list the experimental values of the total corss section that correspond to the selected virtuality
-    EA = df.loc[df['Q2'] == Q2, 'erro'].to_list() # puts in list the  values of the experimental error that correspond to the selected virtuality
+    XA = df.loc[df['Q2'] == Q2, 'x'].to_list()  # lists the experimental values of x that correspond to the selected virtuality
+    SA = df.loc[df['Q2'] == Q2, 'sigma'].to_list()  # lists the experimental values of the total cross section that correspond to the selected virtuality
+    EA = df.loc[df['Q2'] == Q2, 'erro'].to_list() # lists the values of the experimental error that correspond to the selected virtuality
 
-    # constants took from https://arxiv.org/pdf/1307.0825.pdf (and references)
+    # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 
     light_quarks_m = [(10**(-2)), (10**(-2)), (10**(-2))] # light-quark masses (up, down, strange, respectively)
     light_quarks_e = [2/3, -1/3, -1/3] # light-quark charges (up, down, strange, respectively)
@@ -98,7 +98,7 @@ def main():
     quantity = len(list_x)  # lenght of list_x
 
     light_quarks_qs = []  # values of saturation scale (light-quarks)
-    light_quarks_kly = []  # values of kappa*lanbda*rapidity (light-quarks)
+    light_quarks_kly = []  # values of kappa*lambda*rapidity (light-quarks)
     for x in values_x:
         qs_light = np.sqrt(Q0*Q0*(np.exp(lanbda*(np.log(1.0/x)))))
         light_quarks_qs.append(qs_light)
@@ -112,7 +112,7 @@ def main():
         XP.append(y)
 
     charm_quarks_qs = []  # values of saturation scale using XP (charm quark)
-    charm_quarks_kly = [] # values of kappa*lanbda*rapidity using XP (charm quark)
+    charm_quarks_kly = [] # values of kappa*lambda*rapidity using XP (charm quark)
     for n in range(len(XP)):
         qs_charm = np.sqrt(Q0*Q0*(np.exp(lanbda*(np.log(1.0/XP[n])))))
         charm_quarks_qs.append(qs_charm)
@@ -120,11 +120,11 @@ def main():
         kly_charm = kappa*lanbda*(np.log(1.0/XP[n]))
         charm_quarks_kly.append(kly_charm)
 
-    # Dictionary which the keys are the quarks types and the values are the parameters associated to those quarks
+   # Dictionary with keys as quark types and values as the parameters associated with those quarks
     quark_types = {'Light': [light_quarks_e, light_quarks_m, light_quarks_qs, light_quarks_kly], 'Charm': [charm_quarks_e, charm_quarks_m, charm_quarks_qs, charm_quarks_kly]}
 
     parameters = {}
-    for type, value in quark_types.items():  # run trought the quark types and it's parameter values
+    for type, value in quark_types.items():  # run through the quark types and their parameter values
         e = value[0]  # filter values of charge
         m = value[1]  # filter values of mass
         qs = value[2]  # filter values of qs
@@ -153,10 +153,11 @@ def main():
         for e_m in zip(e, m):
             for qs_kly in zip(qs, kly):
                 key_results = (e_m[0], e_m[1], qs_kly[0], qs_kly[1])
-                all_results.append(indexed_results[key_results]) # runs trough all parameters sets (even the repeatd ones) and puts the values of F2 corresponding to those parameters in a list (if there is repeated parameters sets, the values of F2 corresponding to those will also be repeated)
+                all_results.append(indexed_results[key_results]) # run through all parameter sets (even the repeated ones) and put the values of F2 corresponding to those parameters in a list (if there are repeated parameter sets, the values of F2 corresponding to those will also be repeated)
+                                                                 
 
 
-    splited_all_results = np.array_split(all_results, len(all_results)/quantity) # splits the list of all values of F2 between the quark flavours
+    splited_all_results = np.array_split(all_results, len(all_results)/quantity) # split the list of all values of F2 between the quark flavours
 
     list_F2 = [up + down + strange + charm for up, down, strange, charm in zip(splited_all_results[0], splited_all_results[1], splited_all_results[2], splited_all_results[3])]  # total F2 list (theoretical)
 

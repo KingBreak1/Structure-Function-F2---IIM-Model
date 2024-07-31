@@ -3,13 +3,12 @@ This code performs a phenomenological study of deep inelastic scattering in the 
 ## Prerequisites
 
 The code relies on the following Python libraries:
-- `multiprocessing`
 - `numpy` 
 - `scipy`
-- `cmath`
-- `time`
 - `pandas` 
-- `matplotlib` 
-- `locale`
+- `matplotlib`
+
+```bash
+pip install numpy scipy pandas matplotlib
 
 Make sure you have the experimental_data.xlsx file in the same directory as the script.

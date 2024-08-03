@@ -12,7 +12,13 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-Q2 = 650  # virtuality ( ENTER DESIRED VALUE )
+Q2 = 650  # virtuality ( ENTER DESIRED VALUE ) Values with experimental points: [0.045, 0.065, 0.085, 0.11, 0.15, 
+          #                                                                      0.2, 0.25, 0.35, 0.4, 0.5, 0.65, 
+          #                                                                      0.85, 1.2, 1.5, 2.0, 2.7, 3.5, 4.5, 
+          #                                                                      6.5, 8.5, 10.0, 12.0, 15.0, 18.0, 
+          #                                                                      22.0, 27.0, 35.0, 45.0, 60.0, 70.0, 
+          #                                                                      90.0, 120.0, 150.0, 200.0, 250.0, 
+          #                                                                      300.0, 400.0, 500.0, 650.0]
 
  # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 

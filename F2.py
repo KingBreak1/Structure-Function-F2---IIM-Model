@@ -7,9 +7,12 @@ from time import perf_counter
 import pandas as pd
 import matplotlib.pyplot as plt
 import locale
+import warnings
+
+warnings.filterwarnings("ignore")
 
 
-Q2 = 22  # virtuality
+Q2 = 22  # virtuality ( ENTER DESIRED VALUE )
 
  # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 
@@ -73,7 +76,7 @@ def main():
     start = perf_counter()
     print('>>> Starting calculation')
 
-    
+
     df = pd.read_excel('experimental_data.xlsx', header=None,index_col=False, names=['Q2', 'x', 'sigma', 'erro']) # reads the excel document labeled "experimental_data.xlsx" that contains all the experimental information for x < 10^-2
 
 
@@ -81,21 +84,32 @@ def main():
     SA = df.loc[df['Q2'] == Q2, 'sigma'].to_list()  # lists the experimental values of the total cross section that correspond to the selected virtuality
     EA = df.loc[df['Q2'] == Q2, 'erro'].to_list() # lists the values of the experimental error that correspond to the selected virtuality
 
+
+    if Q2 in df['Q2'].to_list():
+
+        if len(XA)==1:
+            values_x = [eval(XA[0])-eval(XA[0])*0.1,eval(XA[0]),eval(XA[0])+eval(XA[0])*0.1]
+            list_x = values_x
+            quantity = len(list_x)
+        else:
+            lower_limit_Y = -np.log(eval(XA[-1]))
+            upper_limit_Y = -np.log(eval(XA[0]))
+
+            values_x = np.exp(-np.linspace(lower_limit_Y, upper_limit_Y, num=10))
+            list_x = list(values_x)  
+            quantity = len(list_x)  
+            
+    else: 
+        values_x = np.exp(-np.linspace(-np.log(10**-2), -np.log(10**-6), num=10))
+        list_x = list(values_x)  
+        quantity = len(list_x)  
+
     # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 
     light_quarks_m = [(10**(-2)), (10**(-2)), (10**(-2))] # light-quark masses (up, down, strange, respectively)
     light_quarks_e = [2/3, -1/3, -1/3] # light-quark charges (up, down, strange, respectively)
     charm_quarks_m = [1.27]  # charm quark mass
     charm_quarks_e = [2/3]  # charm quark charge
-
-    lower_limit_Y = -np.log(10**-2)
-    upper_limit_Y1 = -np.log(10**-6)
-    step_Y = (upper_limit_Y1 - lower_limit_Y)/10
-    upper_limit_Y = -np.log(10**-6) + step_Y
-
-    values_x = np.exp(-np.arange(lower_limit_Y, upper_limit_Y, step_Y))  # values of Bjorken x
-    list_x = list(values_x)  # list of Bjorken x
-    quantity = len(list_x)  # lenght of list_x
 
     light_quarks_qs = []  # values of saturation scale (light-quarks)
     light_quarks_kly = []  # values of kappa*lambda*rapidity (light-quarks)
@@ -186,8 +200,7 @@ def main():
     plt.plot(list_x1, list_F21, '.', color='black')
     plt.errorbar(list_x1, list_F21, yerr=list_err1, fmt='|k')
     plt.xscale('log')
-    plt.title(locale.format_string(
-        '$Q^2=% 1.3f \; \mathrm{GeV^2}$', Q2), fontsize=14)
+    plt.title(f"$Q^2={Q2:.3f}".replace('.', ',') + " \\, \\mathrm{GeV^2}$", fontsize=14)
     plt.ylabel('$F_2$', fontsize=14)
     plt.xlabel('x', fontsize=14)
     plt.grid(linestyle='-')
@@ -195,7 +208,6 @@ def main():
     print('>>> Finishing, total time spent: %s' % ((perf_counter() - start)))
 
     plt.show()
-
 
 if __name__ == "__main__":
     main()

@@ -12,7 +12,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-Q2 = 22  # virtuality ( ENTER DESIRED VALUE )
+Q2 = 650  # virtuality ( ENTER DESIRED VALUE )
 
  # constants taken from https://arxiv.org/pdf/1307.0825.pdf (and references)
 
@@ -87,7 +87,7 @@ def main():
 
     if Q2 in df['Q2'].to_list():
 
-        if len(XA)==1:
+        if len(XA)==1 or len(XA)==2 and XA[0] == XA[1]:
             values_x = [eval(XA[0])-eval(XA[0])*0.1,eval(XA[0]),eval(XA[0])+eval(XA[0])*0.1]
             list_x = values_x
             quantity = len(list_x)
